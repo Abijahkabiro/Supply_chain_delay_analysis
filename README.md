@@ -113,18 +113,18 @@ Record Same Day scheduled delivery as 1 day instead of 0 so performance can be m
 ```
 supply-chain-delay-analysis/
 │
-├── sql/
-│   └── supply_chain_analysis_queries.sql
-    └── screenshots 
-│
-├── sheets/
-│   └── screenshots
-│
 ├── powerbi/
 │   └── Supply_Chain_Delay_Analysis.pbix
 │   └── dashboard_background.png
 │   └── Supply_Chain_Performance_Dashboard.png
 │   └── screenshots
+│── 
+├── sheets/
+│   └── screenshots
+│
+├── sql/
+│   └── supply_chain_analysis_queries.sql
+│   └── screenshots 
 │
 └── README.md
 ```
@@ -184,4 +184,4 @@ Total Orders Analysed = CALCULATE(
 
 Built by **Abijah Kabiro**, a data analyst based in Nairobi, Kenya with four years of experience in supply chain and logistics analytics. This project focused on real operational datasets and outputs that business teams can actually use, not just dashboards for visual effect.
 
-**Connect:** [LinkedIn](https://www.linkedin.com/in/abijah-kabiro) · [Medium](https://medium.com/@abijahkabiro)
+**Connect:** [LinkedIn](https://www.linkedin.com/in/abijahkabiro/) · [Medium](https://medium.com/@abijahkabiro)
