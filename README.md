@@ -73,6 +73,9 @@ Golf Bags and Carts has the highest late rate at 68.3% but only 60 orders. Cleat
 Every month from January 2015 to January 2018 sits between 56.1% and 59.9% late, a range of 3.8 percentage points. The delays are not driven by peak season demand. Capacity planning for Q4 will not solve this problem. Fixing the carrier contracts will.
 
 ---
+## Dashboard Preview
+
+![Supply Chain Performance Dashboard](Power%20BI/Supply%20Chain%20Performance%20Dashboard.png)
 
 ## Errors Encountered
 
