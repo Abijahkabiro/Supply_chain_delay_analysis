@@ -91,19 +91,19 @@ Real projects hit real problems. These were the issues found and how they were r
 
 ## Recommendations
 
-**Review the First Class carrier contract**  
+**1.Review the First Class carrier contract**  
 A 100% late rate across every region means the current service level agreement does not reflect what the carrier is actually delivering. Either renegotiate the promised delivery window or suspend First Class until the agreement is corrected.
 
-**Reassess the shipping strategy for premium orders**  
+**2.Reassess the shipping strategy for premium orders**  
 Standard Class at 39.8% late outperforms both First Class and Second Class. While that rate is still too high, redirecting high-value orders to Standard Class while the premium tier issues are investigated would reduce customer complaints from the customers who matter most.
 
-**Automate the weekly exception report**  
+**3.Automate the weekly exception report**  
 Schedule the exception query as a SQL Agent Job that emails CRITICAL-flagged routes to operations leads every Monday before their weekly review. This converts the analysis from a one-time project into a recurring operational tool.
 
-**Investigate the 7,754 cancelled orders**  
+**4.Investigate the 7,754 cancelled orders**  
 The dataset contains 7,754 cancelled orders representing 4.3% of total orders. Understanding whether these cancellations are customer-initiated due to delay frustration or business-initiated due to fulfilment failures would quantify the revenue impact and change the priority of the recommendations.
 
-**Fix the Same Day system configuration**  
+**5.Fix the Same Day system configuration**  
 Record Same Day scheduled delivery as 1 day instead of 0 so performance can be measured accurately and included in future analysis.
 
 ---
