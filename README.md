@@ -23,13 +23,16 @@ The goal was not just to report that deliveries were late. The goal was to ident
 
 ## Business Questions
 
-The analysis was built around five operational questions:
+The analysis was built around 8 business questions, each answered by a dedicated SQL query:
 
-1. Which shipping modes experience the highest delay rates?
-2. Are delays concentrated in specific product categories or regions?
-3. Which region and shipping mode combinations present the greatest risk?
-4. Is there a seasonal pattern to delivery delays?
-5. How can delay reporting be structured to support weekly operational reviews?
+1. What is the overall on-time delivery rate across the entire dataset?
+2. Which shipping mode has the highest late delivery rate and by how much?
+3. Which regions experience the most delivery delays?
+4. Which product categories have the highest late rates and the highest volume of late orders?
+5. What is the profit impact of late deliveries compared to on-time deliveries?
+6. Which specific region and shipping mode combinations present the greatest operational risk?
+7. Is there a seasonal pattern to delivery delays across months and quarters?
+8. Which routes need escalation this week based on current performance thresholds?
 
 ---
 
@@ -69,13 +72,22 @@ All Same Day orders have a scheduled delivery time of zero days in the system, m
 **5. Cleats drives the highest volume of late deliveries**  
 Golf Bags and Carts has the highest late rate at 68.3% but only 60 orders. Cleats has 23,198 orders with 13,443 arriving late. For operations teams focused on customer impact, Cleats is the higher priority category.
 
-**6. No seasonal pattern exists**  
+**6. Late deliveries still generate profit but the indirect cost is significant**  
+Late delivery orders generated $2,145,747 in profit, representing 57% of total profit. This mirrors the volume split and shows that late orders are not unprofitable in themselves. The real financial risk is indirect: customer dissatisfaction, reduced repeat purchases and 7,754 cancelled orders representing revenue never captured.
+
+**7. No seasonal pattern exists**  
 Every month from January 2015 to January 2018 sits between 56.1% and 59.9% late, a range of 3.8 percentage points. The delays are not driven by peak season demand. Capacity planning for Q4 will not solve this problem. Fixing the carrier contracts will.
 
+**8. Central Asia Second Class is the worst non-First Class route**  
+Outside of First Class, Central Asia Second Class recorded a 90.6% late rate with an average delay of 2.21 days. Canada Standard Class was the best performing route at 30.4% late with an average of -0.27 days meaning orders consistently arrived early.
+
 ---
+
 ## Dashboard Preview
 
 ![Supply Chain Performance Dashboard](Power%20BI/Supply%20Chain%20Performance%20Dashboard.png)
+
+---
 
 ## Errors Encountered
 
@@ -94,19 +106,19 @@ Real projects hit real problems. These were the issues found and how they were r
 
 ## Recommendations
 
-**1.Review the First Class carrier contract**  
+**1. Review the First Class carrier contract**  
 A 100% late rate across every region means the current service level agreement does not reflect what the carrier is actually delivering. Either renegotiate the promised delivery window or suspend First Class until the agreement is corrected.
 
-**2.Reassess the shipping strategy for premium orders**  
+**2. Reassess the shipping strategy for premium orders**  
 Standard Class at 39.8% late outperforms both First Class and Second Class. While that rate is still too high, redirecting high-value orders to Standard Class while the premium tier issues are investigated would reduce customer complaints from the customers who matter most.
 
-**3.Automate the weekly exception report**  
+**3. Automate the weekly exception report**  
 Schedule the exception query as a SQL Agent Job that emails CRITICAL-flagged routes to operations leads every Monday before their weekly review. This converts the analysis from a one-time project into a recurring operational tool.
 
-**4.Investigate the 7,754 cancelled orders**  
+**4. Investigate the 7,754 cancelled orders**  
 The dataset contains 7,754 cancelled orders representing 4.3% of total orders. Understanding whether these cancellations are customer-initiated due to delay frustration or business-initiated due to fulfilment failures would quantify the revenue impact and change the priority of the recommendations.
 
-**5.Fix the Same Day system configuration**  
+**5. Fix the Same Day system configuration**  
 Record Same Day scheduled delivery as 1 day instead of 0 so performance can be measured accurately and included in future analysis.
 
 ---
@@ -120,14 +132,14 @@ supply-chain-delay-analysis/
 │   └── Supply_Chain_Delay_Analysis.pbix
 │   └── dashboard_background.png
 │   └── Supply_Chain_Performance_Dashboard.png
-│   └── screenshots
-│── 
+│   └── screenshots/
+│
 ├── sheets/
-│   └── screenshots
+│   └── screenshots/
 │
 ├── sql/
 │   └── supply_chain_analysis_queries.sql
-│   └── screenshots 
+│   └── screenshots/
 │
 └── README.md
 ```
@@ -187,4 +199,4 @@ Total Orders Analysed = CALCULATE(
 
 Built by **Abijah Kabiro**, a data analyst based in Nairobi, Kenya with four years of experience in supply chain and logistics analytics. This project focused on real operational datasets and outputs that business teams can actually use, not just dashboards for visual effect.
 
-**Connect:** [LinkedIn](https://www.linkedin.com/in/abijahkabiro/) · [Medium](https://medium.com/@abijahkabiro)
+**Connect:** [LinkedIn](https://www.linkedin.com/in/abijahkabiro/) · [Medium](https://medium.com/@abijahkabiro) · [Portfolio](https://abijahkabiro.github.io)
