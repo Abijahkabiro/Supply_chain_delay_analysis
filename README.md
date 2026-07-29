@@ -2,7 +2,7 @@
 
 Designed and delivered an end-to-end Business Intelligence solution that transformed 180,519 supply chain orders into executive insights on delivery performance, operational risk, and carrier accountability. Built the solution using SQL Server, Power BI, and Google Sheets to help operations leaders understand where delays occur, which shipping modes are failing, and which routes require immediate escalation.
 
-The focus was on enabling better operational decisions rather than simply reporting late deliveries. Data profiling, analytical modelling, and exception reporting were used to provide decision-makers with the visibility needed to prioritize corrective action based on evidence instead of assumptions.
+Focused on enabling better operational decisions rather than simply reporting late deliveries. Used data profiling, analytical modelling, and exception reporting to provide decision-makers with the visibility needed to prioritize corrective action based on evidence instead of assumptions.
 
 **Author:** Abijah Kabiro | Business Intelligence Analyst | Nairobi, Kenya
 
@@ -26,7 +26,7 @@ I built this analytical solution to bridge that gap by transforming raw transact
 
 ## Business Objectives
 
-The analytical solution was designed to answer eight operational business questions that support delivery performance management and carrier accountability.
+Designed the analytical solution to answer 8 operational business questions that support delivery performance management and carrier accountability.
 
 ### 1. Overall Delivery Performance
 
@@ -124,15 +124,15 @@ Google Sheets Reporting Layer
 Power BI Executive Dashboard
 ```
 
-The solution was designed as a structured Business Intelligence workflow that prioritizes data quality, analytical consistency, and scalable reporting. Each stage builds on the previous one, creating a traceable analytics pipeline that preserves raw source data while delivering trusted operational insights for decision-makers.
+Designed the solution as a structured Business Intelligence workflow that prioritizes data quality, analytical consistency, and scalable reporting. Each stage builds on the previous one, creating a traceable analytics pipeline that preserves raw source data while delivering trusted operational insights for decision-makers.
 
 ---
 
 ## Phase 1: Data Ingestion
 
-The DataCo Supply Chain dataset was loaded into SQL Server using the Import Flat File wizard in SSMS. Rather than accepting the wizard defaults, I configured all columns to allow nulls during import to prevent ETL failures caused by sparse geographic fields such as Latitude and Longitude. This approach ensured the full dataset could be ingested before any data quality assessment began.
+Loaded the DataCo Supply Chain dataset into SQL Server using the Import Flat File wizard in SSMS. Rather than accepting the wizard defaults, I configured all columns to allow nulls during import to prevent ETL failures caused by sparse geographic fields such as Latitude and Longitude. This approach ensured the full dataset could be ingested before any data quality assessment began.
 
-The load was validated against expected record counts before proceeding to profiling.
+Validated the load against expected record counts before proceeding to profiling.
 
 | Dataset | Records |
 |---|---:|
@@ -144,7 +144,7 @@ The load was validated against expected record counts before proceeding to profi
 
 ## Phase 2: Data Quality Profiling
 
-Before writing any analysis queries, I ran nine structured profiling checks to establish a measurable baseline for data quality. Rather than correcting issues immediately, every issue was identified, quantified, and documented to ensure subsequent cleaning decisions were driven by evidence rather than assumptions.
+Before writing any analysis queries, I ran 9 structured profiling checks to establish a measurable baseline for data quality. Rather than correcting issues immediately, identified, quantified, and documented every issue to ensure subsequent cleaning decisions were driven by evidence rather than assumptions.
 
 This discipline prevented incorrect results from being built on unchecked data and ensured every analytical decision could be traced back to a specific finding.
 
@@ -164,9 +164,9 @@ This discipline prevented incorrect results from being built on unchecked data a
 
 ## Phase 3: Data Cleaning and Standardization
 
-Targeted fixes were applied to the two issues that would have produced incorrect analytical results if left unresolved. Rather than applying blanket cleaning rules, I investigated each issue individually to understand the root cause before deciding on the appropriate resolution.
+Applied targeted fixes to the 2 issues that would have produced incorrect analytical results if left unresolved. Rather than applying blanket cleaning rules, I investigated each issue individually to understand the root cause before deciding on the appropriate resolution.
 
-Every cleaning decision was documented with its root cause and reasoning so the analytical choices are fully traceable and reproducible.
+Documented every cleaning decision with its root cause and reasoning so the analytical choices are fully traceable and reproducible.
 
 | Issue | Root Cause | Resolution |
 |---|---|---|
@@ -174,7 +174,7 @@ Every cleaning decision was documented with its root cause and reasoning so the 
 | Same Day excluded from delay analysis | All Same Day orders have scheduled delivery days of zero | Excluded from delay analysis and documented as a system configuration issue |
 | 14,817 unshipped orders in dataset | PENDING, CANCELED, PROCESSING and SUSPECTED_FRAUD orders have zero actual delivery days | Applied master cleaning filter to all queries excluding rows where either delivery day column equals zero |
 
-After cleaning, the analytical dataset was validated to confirm data integrity before proceeding to analysis.
+Validated the analytical dataset after cleaning to confirm data integrity before proceeding to analysis.
 
 | Metric | Value |
 |---|---:|
@@ -188,17 +188,17 @@ After cleaning, the analytical dataset was validated to confirm data integrity b
 
 ## Phase 4: SQL Analysis
 
-Eight analytical queries were written in SQL Server, each designed to answer one specific business question. The master cleaning filter was applied consistently across all queries to ensure analytical accuracy and comparability of results across different cuts of the data.
+Wrote 8 analytical queries in SQL Server, each designed to answer one specific business question. Applied the master cleaning filter consistently across all queries to ensure analytical accuracy and comparability of results across different cuts of the data.
 
 ### Key Findings
 
 **Overall delivery performance**
 
-57.8% of all validated orders arrived late. More than one in every two orders failed to meet the promised delivery date. The scale of the problem confirmed early in the analysis that this was not an isolated issue affecting specific routes or periods but a network-wide operating norm requiring structural intervention.
+57.8% of all validated orders arrived late. More than 1 in every 2 orders failed to meet the promised delivery date. The scale of the problem confirmed early in the analysis that this was not an isolated issue affecting specific routes or periods but a network-wide operating norm requiring structural intervention.
 
 **Shipping mode performance**
 
-First Class shipping recorded a 100% late delivery rate across 27,814 orders in every region with zero on-time deliveries anywhere in the network. The root cause was a systematic mismatch between the promised delivery window of one day and the actual carrier delivery time of two days. This is a carrier SLA issue rather than a logistics execution failure, which changes the recommended response entirely. Standard Class, the cheapest available option, was the most reliable at 39.8% late.
+First Class shipping recorded a 100% late delivery rate across 27,814 orders in every region with zero on-time deliveries anywhere in the network. Investigating the root cause revealed a systematic mismatch between the promised delivery window of 1 day and the actual carrier delivery time of 2 days. This is a carrier SLA issue rather than a logistics execution failure, which changes the recommended response entirely. Standard Class, the cheapest available option, performed best at 39.8% late.
 
 | Shipping Mode | Total Orders | Late Orders | Late Rate | Avg Delay Days |
 |---|---:|---:|---:|---:|
@@ -208,7 +208,7 @@ First Class shipping recorded a 100% late delivery rate across 27,814 orders in 
 
 **Regional performance**
 
-Performance was analysed across all 23 regions. Every region sits between 52.6% and 62.2% late, a range of only 10 percentage points. Central Africa recorded the highest late rate at 62.2% and Canada the lowest at 52.6%. The narrow range across geographically diverse regions confirmed the delay problem is structural rather than geographic. Addressing individual regional logistics would not move network-wide performance.
+Analysed performance across all 23 regions and found every region sits between 52.6% and 62.2% late, a range of only 10 percentage points. Central Africa recorded the highest late rate at 62.2% and Canada the lowest at 52.6%. The narrow range across geographically diverse regions confirmed the delay problem is structural rather than geographic. Addressing individual regional logistics would not move network-wide performance.
 
 **Financial impact**
 
@@ -216,11 +216,11 @@ Late delivery orders generated 57% of total profit, mirroring the volume split. 
 
 **Seasonal patterns**
 
-The hypothesis that Q4 peak season drives higher delays was tested directly. The data did not support it. Every month from January 2015 to January 2018 sits between 56.1% and 59.9% late, a range of only 3.8 percentage points across 37 months. The delay problem is structural and will not be resolved through seasonal capacity planning.
+Tested the hypothesis that Q4 peak season drives higher delays directly against the data. Every month from January 2015 to January 2018 sits between 56.1% and 59.9% late, a range of only 3.8 percentage points across 37 months. The delay problem is structural and will not be resolved through seasonal capacity planning.
 
 **Route-level risk**
 
-Central Asia Second Class recorded the highest non-First Class late rate at 90.6% with an average delay of 2.21 days. Canada Standard Class was the best performing route at 30.4% late with orders consistently arriving 0.27 days ahead of schedule on average.
+Central Asia Second Class recorded the highest non-First Class late rate at 90.6% with an average delay of 2.21 days. Canada Standard Class performed best at 30.4% late with orders consistently arriving 0.27 days ahead of schedule on average.
 
 ---
 
@@ -232,7 +232,7 @@ Central Asia Second Class recorded the highest non-First Class late rate at 90.6
 
 ## Phase 5: Google Sheets Reporting Layer
 
-A four-tab Google Sheets workbook was built to translate SQL outputs into stakeholder-ready reports accessible without requiring SQL Server access. The workbook was designed to serve as an operational reporting layer that operations teams could open, interpret, and act on without analytical support.
+Built a 4-tab Google Sheets workbook to translate SQL outputs into stakeholder-ready reports accessible without requiring SQL Server access. Designed the workbook to serve as an operational reporting layer that operations teams could open, interpret, and act on without analytical support.
 
 | Tab | Purpose |
 |---|---|
@@ -247,17 +247,17 @@ A four-tab Google Sheets workbook was built to translate SQL outputs into stakeh
 
 ## Phase 6: Power BI Dashboard
 
-An interactive Power BI dashboard was built connected directly to the SQL Server database, enabling operations teams to monitor delivery performance dynamically with filters applied across region, shipping mode, and product category.
+Built an interactive Power BI dashboard connected directly to the SQL Server database, enabling operations teams to monitor delivery performance dynamically with filters applied across region, shipping mode, and product category.
 
-The dashboard was structured to answer the eight business questions from Phase 1 through a combination of KPI cards, bar charts, a regional map, a monthly trend line, a route performance table, and a delivery status breakdown. A custom background image was designed to structure the layout and guide users through the analytical story in a logical sequence.
+Structured the dashboard to answer the 8 business questions from Phase 1 through a combination of KPI cards, bar charts, a regional map, a monthly trend line, a route performance table, and a delivery status breakdown. Designed a custom background image to structure the layout and guide users through the analytical story in a logical sequence.
 
-The master cleaning filter was incorporated into all DAX measures to ensure dashboard metrics are fully consistent with the SQL analysis outputs.
+Incorporated the master cleaning filter into all DAX measures to ensure dashboard metrics are fully consistent with the SQL analysis outputs.
 
 ---
 
 ## Business Recommendations
 
-The analysis identified five actions that would reduce delivery delays and strengthen carrier accountability.
+The analysis identified 5 actions that would reduce delivery delays and strengthen carrier accountability.
 
 ### 1. Audit the First Class Carrier Contract
 
@@ -267,7 +267,7 @@ First Class shipping has a 100% late rate across every region with zero on-time 
 
 ### 2. Redirect High-Value Orders to Standard Class
 
-Standard Class at 39.8% late significantly outperforms both First Class and Second Class. Customers paying premium prices are receiving the worst delivery outcomes in the network, which creates disproportionate churn risk among the highest-value customer segment.
+Standard Class at 39.8% late significantly outperforms both First Class and Second Class. Customers paying premium prices are receiving the worst delivery outcomes in the network, creating disproportionate churn risk among the highest-value customer segment.
 
 **Recommendation:** Redirect high-value orders to Standard Class while First Class and Second Class performance issues are under investigation. Communicate the change to affected customers to manage expectations and reduce complaint volumes.
 
@@ -287,13 +287,13 @@ The dataset contains 7,754 cancelled orders representing 4.3% of total orders. C
 
 All Same Day orders have scheduled delivery days of zero, making it impossible to measure whether they arrived on time or late. A significant portion of the network is currently operating outside any performance measurement framework.
 
-**Recommendation:** Update the system configuration to record Same Day scheduled delivery as one day. This will enable Same Day performance to be included in future exception reporting and carrier accountability conversations.
+**Recommendation:** Update the system configuration to record Same Day scheduled delivery as 1 day. This will enable Same Day performance to be included in future exception reporting and carrier accountability conversations.
 
 ---
 
 ## Data Quality Management
 
-Data quality management formed a core component of the analytical solution rather than a preprocessing activity. Six categories of issues were identified, measured, and resolved before analysis began. Every transformation was validated using before-and-after record counts to ensure changes were measurable, traceable, and reproducible.
+Data quality management formed a core component of the analytical solution rather than a preprocessing activity. Identified, measured, and resolved 6 categories of issues before analysis began. Validated every transformation using before-and-after record counts to ensure changes were measurable, traceable, and reproducible.
 
 | Issue | Volume | Root Cause | Resolution |
 |---|---:|---|---|
@@ -304,7 +304,7 @@ Data quality management formed a core component of the analytical solution rathe
 | Invalid alias in ORDER BY | Query error | SQL Server evaluates ORDER BY before SELECT aliases resolve | Repeated CASE WHEN logic directly in ORDER BY clause |
 | Same Day missing from results | 9,737 rows | Scheduled days of zero removed by master cleaning filter | Investigated root cause, excluded with full documentation |
 
-The final analytical dataset contained 170,782 validated order rows, three measurable shipping modes, 23 regions, and 50 product categories with zero unresolved data quality issues affecting analytical accuracy.
+The final analytical dataset contained 170,782 validated order rows, 3 measurable shipping modes, 23 regions, and 50 product categories with zero unresolved data quality issues affecting analytical accuracy.
 
 ---
 
@@ -350,9 +350,9 @@ supply-chain-delay-analysis/
 
 - Business problem definition and requirements analysis
 - Data ingestion and staging
-- Data quality profiling across nine structured checks
+- Data quality profiling across 9 structured checks
 - Data cleaning and standardization with full documentation
-- SQL analytics across eight business questions
+- SQL analytics across 8 business questions
 - KPI design and operational performance measurement
 - Exception reporting with automated risk flagging
 - Power BI semantic modelling and DAX measure development
@@ -372,7 +372,7 @@ A detailed walkthrough of the project including the business context, analytical
 
 ## About the Author
 
-I am **Abijah Kabiro**, a Business Intelligence Analyst who designs end-to-end analytical solutions that transform operational data into trusted business insights. With four years of experience across supply chain, logistics, and fintech, my work combines SQL Server, Power BI, and dimensional modelling to support performance improvement and evidence-based decision-making.
+I am **Abijah Kabiro**, a Business Intelligence Analyst who designs end-to-end analytical solutions that transform operational data into trusted business insights. With 4 years of experience across supply chain, logistics, and fintech, my work combines SQL Server, Power BI, and dimensional modelling to support performance improvement and evidence-based decision-making.
 
 I specialise in the complete Business Intelligence lifecycle from understanding business problems and preparing data to designing analytical models, developing executive dashboards, and delivering recommendations that improve operational performance.
 
