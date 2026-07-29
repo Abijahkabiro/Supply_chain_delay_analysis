@@ -8,7 +8,7 @@ Focused on enabling better operational decisions rather than simply reporting la
 
 **Technology Stack:** SQL Server • SSMS • Power BI • DAX • Google Sheets
 
-**Dataset:** [DataCo Smart Supply Chain Dataset](https://www.kaggle.com/datasets/shashwatwork/dataco-smart-supply-chain-for-big-data-analysis) 180,519 orders across 23 regions and 50 product categories spanning January 2015 to January 2018.
+**Dataset:** [DataCo Smart Supply Chain Dataset](https://www.kaggle.com/datasets/shashwatwork/dataco-smart-supply-chain-for-big-data-analysis) — 180,519 orders across 23 regions and 50 product categories spanning January 2015 to January 2018.
 
 **Project Focus:** Supply Chain Analytics • Operational Performance • Exception Reporting • Business Intelligence
 
@@ -20,13 +20,13 @@ A global e-commerce supply chain was experiencing persistent delivery delays acr
 
 Without this visibility, delay management remained reactive. Operations teams were firefighting individual complaints rather than addressing the structural causes driving a network-wide performance failure.
 
-Built this analytical solution to bridge that gap by transforming raw transaction data into actionable business intelligence. Rather than simply measuring the late delivery rate, the solution enables operations leaders to identify the root causes, monitor performance by route and shipping mode, and act on a structured weekly exception report every Monday morning.
+This analytical solution was built to bridge that gap by transforming raw transaction data into actionable business intelligence. Rather than simply measuring the late delivery rate, the solution enables operations leaders to identify the root causes, monitor performance by route and shipping mode, and act on a structured weekly exception report every Monday morning.
 
 ---
 
 ## Business Objectives
 
-Designed the analytical solution to answer eight operational business questions that support delivery performance management and carrier accountability.
+The analytical solution was designed to answer eight operational business questions that support delivery performance management and carrier accountability.
 
 ### 1. Overall Delivery Performance
 
@@ -89,7 +89,7 @@ Deliver an operational tool for Monday morning reviews.
 
 ## Business Value
 
-Delivered a Business Intelligence solution that enables stakeholders to:
+This Business Intelligence solution enables stakeholders to:
 
 - Monitor delivery performance through executive-level KPIs updated from the source database.
 - Identify the specific carrier tiers and routes generating the greatest operational risk.
@@ -130,70 +130,72 @@ Each stage builds on the previous one, creating a traceable analytics pipeline t
 
 ## Phase 1: Data Ingestion
 
-Loaded the DataCo Supply Chain dataset into SQL Server using the Import Flat File wizard in SSMS. Configured all columns to allow nulls during import to prevent ETL failures caused by sparse geographic fields.
+The DataCo Supply Chain dataset was loaded into SQL Server using the Import Flat File wizard in SSMS. All columns were configured to allow nulls during import to prevent ETL failures caused by sparse geographic fields such as Latitude and Longitude. This approach ensured the full dataset could be ingested before any data quality assessment began.
 
-Validated the load against expected record counts before proceeding to profiling.
+The load was validated against expected record counts before proceeding to profiling.
 
 | Dataset | Records |
 |---|---:|
-| Raw orders | 180,519 |
+| Raw orders loaded | 180,519 |
 | Unique orders | 65,752 |
-| Average items per order | 2 |
+| Average line items per order | 2 |
 
 ---
 
 ## Phase 2: Data Quality Profiling
 
-Before writing any analysis queries, ran 9 structured profiling checks to establish a measurable baseline for data quality.
+Before writing any analysis queries, nine structured profiling checks were run to establish a measurable baseline for data quality. Rather than correcting issues immediately, every issue was identified, quantified, and documented to ensure subsequent cleaning decisions were driven by evidence rather than assumptions.
 
-Rather than correcting issues immediately, identified, quantified, and documented every issue to ensure subsequent cleaning decisions were driven by evidence.
+This discipline prevented incorrect results from being built on unchecked data and ensured every analytical decision could be traced back to a specific finding.
 
 | Quality Check | Finding |
 |---|---|
-| Data grain | One row represents one order line item, not one order |
+| Data grain | One row represents one order line item, not one unique order |
 | Null values | Zero nulls in all key analytical columns |
-| Duplicate orders | 65,752 unique Order IDs from 180,519 rows confirms multi-item orders |
+| Duplicate orders | 65,752 unique Order IDs from 180,519 rows confirms legitimate multi-item orders |
 | Date range | January 2015 to January 2018, consistent with expected scope |
-| Data types | Days_for_shipping_real and Days_for_shipment_scheduled imported as tinyint, causing arithmetic overflow errors |
+| Data types | Days_for_shipping_real and Days_for_shipment_scheduled imported as tinyint, causing arithmetic overflow on delay calculations |
 | Same Day scheduling | All 9,737 Same Day orders have scheduled delivery days of zero, making delay measurement impossible |
 | Zero delivery day rows | 14,817 rows with zero delivery days concentrated in PENDING, CANCELED, and SUSPECTED_FRAUD statuses |
-| Bad values | Latitude and Longitude contained sparse values with 114 nulls, excluded from analysis |
+| Geographic nulls | 114 rows with null Latitude and Longitude values, excluded from geographic analysis |
 | Hidden spaces | No leading or trailing spaces found in categorical columns |
-
-Profiling first ensured every cleaning decision was measurable, traceable, and aligned with the analytical objectives.
 
 ---
 
 ## Phase 3: Data Cleaning and Standardization
 
-Applied targeted fixes to the two issues that would have produced incorrect analytical results if left unresolved.
+Targeted fixes were applied to the two issues that would have produced incorrect analytical results if left unresolved. Every cleaning decision was documented with its root cause and the reasoning behind the resolution.
 
 | Issue | Root Cause | Resolution |
 |---|---|---|
-| tinyint overflow on delay calculation | Delivery day columns imported as tinyint which cannot hold negative numbers | Ran ALTER TABLE to convert both columns from tinyint to INT |
-| Same Day excluded from delay analysis | All Same Day orders have scheduled delivery days of zero | Excluded from delay analysis and documented as a system configuration issue |
-| 14,817 unshipped orders | PENDING, CANCELED, PROCESSING and SUSPECTED_FRAUD orders have zero actual delivery days | Applied master cleaning filter to all queries: WHERE Days_for_shipping_real > 0 AND Days_for_shipment_scheduled > 0 |
+| Arithmetic overflow on delay calculation | Delivery day columns imported as tinyint which cannot hold negative numbers | Converted both columns from tinyint to INT using ALTER TABLE |
+| Same Day excluded from delay analysis | All Same Day orders have scheduled delivery days of zero | Excluded from delay analysis and documented as a system configuration issue requiring remediation |
+| 14,817 unshipped orders in dataset | PENDING, CANCELED, PROCESSING and SUSPECTED_FRAUD orders have zero actual delivery days | Applied master cleaning filter to all queries excluding rows where either delivery day column equals zero |
 
 After cleaning, the analytical dataset contained:
 
-- **170,782** validated order rows
-- **3** measurable shipping modes (Same Day excluded)
-- **23** regions
-- **50** product categories
+| Metric | Value |
+|---|---:|
+| Validated order rows | 170,782 |
+| Measurable shipping modes | 3 |
+| Regions included | 23 |
+| Product categories | 50 |
 
 ---
 
 ## Phase 4: SQL Analysis
 
-Wrote 8 analytical queries in SQL Server, each designed to answer one specific business question. Applied the master cleaning filter consistently across all queries to ensure analytical accuracy.
+Eight analytical queries were written in SQL Server, each designed to answer one specific business question. The master cleaning filter was applied consistently across all queries to ensure analytical accuracy and comparability of results across different cuts of the data.
 
 ### Key Findings
 
 **Overall delivery performance**
-57.8% of all validated orders arrived late. More than one in every two orders failed to meet the promised delivery date. The delay problem is a network-wide operating norm, not an isolated incident.
+
+57.8% of all validated orders arrived late. More than one in every two orders failed to meet the promised delivery date. The delay problem is a network-wide operating norm, not an isolated incident affecting specific routes or periods.
 
 **Shipping mode performance**
-First Class shipping recorded a 100% late delivery rate across 27,814 orders in every region with zero on-time deliveries anywhere. The cause is a systematic mismatch between the promised delivery window of 1 day and the actual delivery time of 2 days. This is a carrier SLA issue, not a logistics failure. Standard Class, the cheapest option, was the most reliable at 39.8% late.
+
+First Class shipping recorded a 100% late delivery rate across 27,814 orders in every region with zero on-time deliveries anywhere in the network. The root cause is a systematic mismatch between the promised delivery window of one day and the actual carrier delivery time of two days. This is a carrier SLA issue rather than a logistics execution failure. Standard Class, the cheapest available option, was the most reliable at 39.8% late.
 
 | Shipping Mode | Total Orders | Late Orders | Late Rate | Avg Delay Days |
 |---|---:|---:|---:|---:|
@@ -202,16 +204,20 @@ First Class shipping recorded a 100% late delivery rate across 27,814 orders in 
 | Standard Class | 107,752 | 42,851 | 39.8% | 0.00 |
 
 **Regional performance**
-All 23 regions sit between 52.6% and 62.2% late, a range of only 10 percentage points. Central Africa recorded the highest late rate at 62.2% and Canada the lowest at 52.6%. The narrow range confirms the delay problem is structural, not geographic. Fixing one region would not move the needle.
+
+All 23 regions sit between 52.6% and 62.2% late, a range of only 10 percentage points. Central Africa recorded the highest late rate at 62.2% and Canada the lowest at 52.6%. The narrow range across geographically diverse regions confirms the delay problem is structural rather than geographic. Addressing individual regional logistics would not move the network-wide performance.
 
 **Financial impact**
-Late delivery orders generated $2,145,747 in profit, representing 57% of total profit. This mirrors the volume split and confirms that late orders are not unprofitable in themselves. The real financial risk is indirect through customer dissatisfaction, reduced repeat purchases, and 7,754 cancelled orders representing revenue never captured.
+
+Late delivery orders generated 57% of total profit, mirroring the volume split. Late orders are not unprofitable in themselves. The real financial risk is indirect through customer dissatisfaction, reduced repeat purchase rates, and 7,754 cancelled orders representing revenue that was never captured.
 
 **Seasonal patterns**
-Every month from January 2015 to January 2018 sits between 56.1% and 59.9% late, a range of 3.8 percentage points. No Q4 peak season effect was found. The delay problem is structural and will not be resolved through seasonal capacity planning.
+
+Every month from January 2015 to January 2018 sits between 56.1% and 59.9% late, a range of only 3.8 percentage points across 37 months. No Q4 peak season effect was identified. The delay problem is structural and will not be resolved through seasonal capacity planning.
 
 **Route-level risk**
-Central Asia Second Class recorded the highest non-First Class late rate at 90.6% with an average delay of 2.21 days. Canada Standard Class was the best performing route at 30.4% late with orders consistently arriving 0.27 days early on average.
+
+Central Asia Second Class recorded the highest non-First Class late rate at 90.6% with an average delay of 2.21 days. Canada Standard Class was the best performing route at 30.4% late with orders consistently arriving 0.27 days ahead of schedule on average.
 
 ---
 
@@ -223,14 +229,14 @@ Central Asia Second Class recorded the highest non-First Class late rate at 90.6
 
 ## Phase 5: Google Sheets Reporting Layer
 
-Built a four-tab Google Sheets workbook to translate SQL outputs into stakeholder-ready reports accessible without SQL Server access.
+A four-tab Google Sheets workbook was built to translate SQL outputs into stakeholder-ready reports accessible without requiring SQL Server access. The workbook was designed to serve as an operational reporting layer that operations teams could open, interpret, and act on without analytical support.
 
 | Tab | Purpose |
 |---|---|
 | Dashboard Summary | Headline KPIs, key findings, and top recommendations for non-technical stakeholders |
 | Delay by Shipping Mode | Performance breakdown by carrier tier with colour-coded risk indicators |
-| Weekly Exception Report | CRITICAL, WARNING, and MONITOR flags with pre-written action checklist for Monday operations reviews |
-| Delay by Category | 50 product categories ranked by late rate with key insights section |
+| Weekly Exception Report | CRITICAL, WARNING, and MONITOR flags with a pre-written action checklist for Monday operations reviews |
+| Delay by Category | 50 product categories ranked by late rate with key insights highlighting the highest risk and highest volume categories |
 
 **Live Report:** [View the Supply Chain Delay Analysis](https://docs.google.com/spreadsheets/d/11WScYkRSGapPfTlJoQ433jA0oXYXpSJQXd4qfvKiixY/edit?usp=sharing)
 
@@ -238,81 +244,64 @@ Built a four-tab Google Sheets workbook to translate SQL outputs into stakeholde
 
 ## Phase 6: Power BI Dashboard
 
-Built an interactive Power BI dashboard connected to the SQL Server database, enabling operations teams to monitor delivery performance dynamically with filters applied by region, shipping mode, and category.
+An interactive Power BI dashboard was built connected directly to the SQL Server database, enabling operations teams to monitor delivery performance dynamically with filters applied across region, shipping mode, and product category.
 
-### DAX Measures
+The dashboard was structured to answer the eight business questions from Phase 1 through a combination of KPI cards, bar charts, a regional map, a monthly trend line, a route performance table, and a delivery status breakdown. A custom background image was designed to structure the layout and guide users through the analytical story.
 
-```dax
-Late Rate = DIVIDE(SUM([Is_Late]), COUNT([Is_Late]), 0)
-
-Avg Delay Days = AVERAGEX(
-    FILTER(DataCoSupplyChainDataset,
-        [Days_for_shipping_real] > 0 &&
-        [Days_for_shipment_scheduled] > 0),
-    [Delay_Days])
-
-Total Late Orders = CALCULATE(
-    COUNT([Is_Late]),
-    [Is_Late] = 1,
-    [Days_for_shipping_real] > 0,
-    [Days_for_shipment_scheduled] > 0)
-
-Total Orders Analysed = CALCULATE(
-    COUNT([Order_Id]),
-    [Days_for_shipping_real] > 0,
-    [Days_for_shipment_scheduled] > 0)
-```
+All DAX measures incorporate the master cleaning filter to ensure dashboard metrics are consistent with the SQL analysis.
 
 ---
 
 ## Business Recommendations
 
-The analysis identified five actions that would reduce delivery delays and improve carrier accountability.
+The analysis identified five actions that would reduce delivery delays and strengthen carrier accountability.
 
 ### 1. Audit the First Class Carrier Contract
 
-First Class shipping has a 100% late rate across every region with zero on-time deliveries across 27,814 orders.
+First Class shipping has a 100% late rate across every region with zero on-time deliveries across 27,814 orders. The gap between the promised delivery window and actual performance is consistent and universal.
 
-**Recommendation:** Initiate an immediate review of the First Class carrier SLA. The current promised delivery window of 1 day does not reflect actual carrier performance. Either renegotiate the contract to reflect a 2-day window or suspend First Class until performance is corrected.
+**Recommendation:** Initiate an immediate review of the First Class carrier SLA. Either renegotiate the contract to reflect a realistic delivery window or suspend First Class as a customer-facing option until carrier performance is corrected.
 
 ### 2. Redirect High-Value Orders to Standard Class
 
 Standard Class at 39.8% late significantly outperforms both First Class and Second Class. Customers paying premium prices are receiving the worst delivery outcomes in the network.
 
-**Recommendation:** Redirect high-value orders to Standard Class while First Class and Second Class performance issues are under investigation. Communicate the change to customers to manage expectations.
+**Recommendation:** Redirect high-value orders to Standard Class while First Class and Second Class performance issues are under investigation. Communicate the change to affected customers to manage expectations and reduce complaint volumes.
 
 ### 3. Automate the Weekly Exception Report
 
 The manual production of exception reports creates unnecessary analytical overhead and delays operational response time.
 
-**Recommendation:** Schedule the exception query as a SQL Agent Job that emails CRITICAL-flagged routes to operations leads every Monday before the weekly review meeting. This converts the analysis from a one-time project into a recurring operational tool.
+**Recommendation:** Schedule the exception query as a SQL Agent Job that delivers CRITICAL-flagged routes to operations leads every Monday before the weekly review meeting. This converts the analysis from a one-time project into a recurring operational tool that requires no manual intervention.
 
 ### 4. Investigate the 7,754 Cancelled Orders
 
 The dataset contains 7,754 cancelled orders representing 4.3% of total orders. Cancellation reasons were not available in the dataset.
 
-**Recommendation:** Segment cancelled orders by customer tenure, order value, and shipping mode to determine whether cancellations are delay-driven or fulfilment-driven. The answer changes the priority of the corrective actions above.
+**Recommendation:** Segment cancelled orders by customer tenure, order value, and shipping mode to determine whether cancellations are delay-driven or fulfilment-driven. The answer materially changes the priority of the corrective actions above.
 
 ### 5. Fix the Same Day System Configuration
 
 All Same Day orders have scheduled delivery days of zero, making it impossible to measure whether they arrived on time or late.
 
-**Recommendation:** Update the system configuration to record Same Day scheduled delivery as 1 day. This will enable Same Day performance to be included in future exception reporting.
+**Recommendation:** Update the system configuration to record Same Day scheduled delivery as one day. This will enable Same Day performance to be included in future exception reporting and carrier accountability conversations.
 
 ---
 
 ## Data Quality Management
 
-Data quality management formed a core component of the analytical solution rather than a preprocessing activity.
+Data quality management formed a core component of the analytical solution rather than a preprocessing activity. Six categories of issues were identified, measured, and resolved before analysis began. Every transformation was documented to ensure changes were measurable, traceable, and reproducible.
 
 | Issue | Volume | Root Cause | Resolution |
 |---|---:|---|---|
-| tinyint overflow | 2 columns | Import wizard assigned tinyint to delivery day columns | ALTER TABLE to convert to INT |
-| Import null rejection | 114 rows | Wizard set geographic columns as NOT NULL by default | Enabled Allow Nulls in import wizard |
-| Invalid column names | 53 columns | SQL Server replaced spaces with underscores during import | INFORMATION_SCHEMA query to retrieve actual column names |
-| Percentage over 100% | Calculation error | Mixed COUNT(DISTINCT) and SUM at different data grains | Changed denominator to COUNT(*) for consistent grain |
-| Invalid alias in ORDER BY | Query error | SQL Server evaluates ORDER BY before SELECT aliases | Repeated CASE WHEN logic in ORDER BY clause |
-| Same Day missing from results | 9,737 rows | Scheduled days of zero filtered by master cleaning filter | Investigated root cause and excluded with documentation |
+| tinyint overflow on delay calculation | 2 columns | Import wizard assigned tinyint to delivery day columns | Converted to INT using ALTER TABLE |
+| Import null rejection | 114 rows | Wizard set geographic columns as NOT NULL by default | Enabled Allow Nulls in import wizard settings |
+| Invalid column names | 53 columns | SQL Server replaced spaces with underscores during import | Used INFORMATION_SCHEMA to retrieve actual column names |
+| Percentage calculation over 100% | Calculation error | Mixed COUNT DISTINCT and SUM at different data grains | Changed denominator to COUNT for consistent grain |
+| Invalid alias in ORDER BY | Query error | SQL Server evaluates ORDER BY before SELECT aliases resolve | Repeated CASE WHEN logic directly in ORDER BY clause |
+| Same Day missing from results | 9,737 rows | Scheduled days of zero removed by master cleaning filter | Investigated root cause, excluded with full documentation |
+
+The final analytical dataset contained 170,782 validated order rows, three measurable shipping modes, 23 regions, and 50 product categories with zero unresolved data quality issues affecting analytical accuracy.
 
 ---
 
@@ -321,13 +310,13 @@ Data quality management formed a core component of the analytical solution rathe
 ### SQL Server
 
 1. Download the dataset from [Kaggle](https://www.kaggle.com/datasets/shashwatwork/dataco-smart-supply-chain-for-big-data-analysis).
-2. Import `DataCoSupplyChainDataset.csv` into SQL Server using the Import Flat File wizard. Enable Allow Nulls for all columns on Page 4 of the wizard.
-3. Run the ALTER TABLE commands to convert tinyint columns to INT (documented in the SQL file).
-4. Execute queries from `sql/supply_chain_analysis_queries.sql` in order.
+2. Import the CSV file into SQL Server using the Import Flat File wizard. Enable Allow Nulls for all columns on Page 4 of the wizard before completing the import.
+3. Run the ALTER TABLE statements to convert the tinyint delivery day columns to INT before executing any analysis queries.
+4. Execute the queries from the SQL file in order. Each query is labelled with the business question it answers.
 
 ### Power BI
 
-1. Open `powerbi/Supply_Chain_Delay_Analysis.pbix`.
+1. Open the Power BI file from the powerbi folder.
 2. Update the SQL Server connection to your local instance.
 3. Refresh the dataset.
 4. Review the dashboard across all visual sections.
@@ -357,14 +346,15 @@ supply-chain-delay-analysis/
 ## Business Intelligence Capabilities Demonstrated
 
 - Business problem definition and requirements analysis
-- Data ingestion and quality profiling
-- Data cleaning and standardization
-- SQL analytics across 8 business questions
-- KPI design and operational reporting
+- Data ingestion and staging
+- Data quality profiling across nine structured checks
+- Data cleaning and standardization with full documentation
+- SQL analytics across eight business questions
+- KPI design and operational performance measurement
 - Exception reporting with automated risk flagging
-- Power BI semantic modeling and DAX
-- Google Sheets reporting layer design
-- Dashboard design for operational decision support
+- Power BI semantic modelling and DAX measure development
+- Google Sheets operational reporting layer design
+- Dashboard design for decision support
 - Business insight generation and executive recommendations
 
 ---
