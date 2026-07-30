@@ -1,14 +1,11 @@
 # Supply Chain Delay Analysis
 
-Designed and delivered an end-to-end Business Intelligence solution that transformed 180,519 supply chain orders into executive insights on delivery performance, operational risk, and carrier accountability. Built the solution using SQL Server, Power BI, and Google Sheets to help operations leaders understand where delays occur, which shipping modes are failing, and which routes require immediate escalation.
-
+Designed and delivered an end-to-end Business Intelligence solution that transformed 180,519 supply chain orders into executive insights on delivery performance, operational risk, and carrier accountability. Built this analytical solution to bridge that gap by transforming raw transaction data into actionable business intelligence.
 Focused on enabling better operational decisions rather than simply reporting late deliveries. Used data profiling, analytical modelling, and exception reporting to provide decision-makers with the visibility needed to prioritize corrective action based on evidence instead of assumptions.
 
 **Author:** Abijah Kabiro | Business Intelligence Analyst | Nairobi, Kenya
 
 **Technology Stack:** SQL Server • SSMS • Power BI • DAX • Google Sheets
-
-**Dataset:** [DataCo Smart Supply Chain Dataset](https://www.kaggle.com/datasets/shashwatwork/dataco-smart-supply-chain-for-big-data-analysis) — 180,519 orders across 23 regions and 50 product categories spanning January 2015 to January 2018.
 
 **Project Focus:** Supply Chain Analytics • Operational Performance • Exception Reporting • Business Intelligence
 
@@ -16,11 +13,11 @@ Focused on enabling better operational decisions rather than simply reporting la
 
 ## Business Context
 
-A global e-commerce supply chain was experiencing persistent delivery delays across multiple regions and shipping modes. Although operations teams could see that deliveries were arriving late, they lacked the analytical visibility to understand where the problem was concentrated, which shipping modes were responsible, and what actions would have the highest business impact.
+The project examines how supply chain performance patterns can reveal early indicators of operational risk. A global e-commerce supply chain was experiencing persistent delivery delays across multiple regions and shipping modes. Although operations teams could see that deliveries were arriving late, they lacked the analytical visibility to understand where the problem was concentrated, which shipping modes were responsible, and what actions would have the highest business impact.
 
 Without this visibility, delay management remained reactive. Operations teams were firefighting individual complaints rather than addressing the structural causes driving a network-wide performance failure.
 
-I built this analytical solution to bridge that gap by transforming raw transaction data into actionable business intelligence. Rather than simply measuring the late delivery rate, the solution enables operations leaders to identify the root causes, monitor performance by route and shipping mode, and act on a structured weekly exception report every Monday morning.
+Built this analytical solution to bridge that gap by transforming raw transaction data into actionable business intelligence. Rather than simply measuring the late delivery rate, the solution enables operations leaders to identify the root causes, monitor performance by route and shipping mode, and act on a structured weekly exception report every Monday morning.
 
 ---
 
@@ -103,7 +100,7 @@ Delivered a Business Intelligence solution that enables stakeholders to:
 ## Solution Architecture
 
 ```text
-Raw CSV Source Data
+Raw CSV Data Source
       │
       ▼
 SQL Server Staging
@@ -224,12 +221,6 @@ Central Asia Second Class recorded the highest non-First Class late rate at 90.6
 
 ---
 
-## Dashboard Preview
-
-![Supply Chain Performance Dashboard](Power%20BI/Supply%20Chain%20Performance%20Dashboard.png)
-
----
-
 ## Phase 5: Google Sheets Reporting Layer
 
 Built a 4-tab Google Sheets workbook to translate SQL outputs into stakeholder-ready reports accessible without requiring SQL Server access. Designed the workbook to serve as an operational reporting layer that operations teams could open, interpret, and act on without analytical support.
@@ -245,13 +236,37 @@ Built a 4-tab Google Sheets workbook to translate SQL outputs into stakeholder-r
 
 ---
 
-## Phase 6: Power BI Dashboard
+# Dashboard Preview
 
-Built an interactive Power BI dashboard connected directly to the SQL Server database, enabling operations teams to monitor delivery performance dynamically with filters applied across region, shipping mode, and product category.
+## Page 1: Performance Overview
 
-Structured the dashboard to answer the 8 business questions from Phase 1 through a combination of KPI cards, bar charts, a regional map, a monthly trend line, a route performance table, and a delivery status breakdown. Designed a custom background image to structure the layout and guide users through the analytical story in a logical sequence.
+Designed for supply chain leaders who need an immediate view of delivery performance across the full order base.
 
-Incorporated the master cleaning filter into all DAX measures to ensure dashboard metrics are fully consistent with the SQL analysis outputs.
+The dashboard presents executive KPIs including total orders analysed, total late orders, overall late rate, and average delay days. It combines these metrics with a late rate breakdown by shipping mode, late rate analysis by product category, and a regional map showing where delivery delays are concentrated geographically.
+
+A three-tier colour system (red for critical, amber for elevated, green for acceptable) is applied consistently across the dashboard to make operational risk visible at a glance rather than requiring users to interpret every individual metric.
+
+Its primary purpose is to help decision-makers understand the scale of the delay problem, identify where risk is concentrated, and determine which areas require deeper investigation.
+
+![Page 1: Performance Overview](powerbi/Performance_Overview.png)
+
+---
+
+## Page 2: Trends and Operational Priorities
+
+This page moves from identifying operational issues to prioritizing corrective action.
+
+A monthly trend analysis establishes whether delivery delays are increasing, decreasing, or remaining structurally consistent over time. The Top Repeat Offender Routes table then breaks performance down by region and shipping mode, ranked by total late order volume rather than late rate alone.
+
+This approach highlights the routes creating the greatest operational impact. Several routes may share a 100% late rate, but the business consequence differs significantly depending on how many orders and customers are affected.
+
+The dashboard also includes a delivery status breakdown that reframes the full order population into outcome categories, helping stakeholders distinguish between orders performing as expected and orders requiring intervention.
+
+One of the most important findings was the difference between rate and volume. First Class recorded a 100% late delivery rate, but Standard Class generated the highest number of late orders because of its significantly larger order volume. This distinction changed the recommended response from focusing only on the worst-performing percentage to addressing the areas creating the greatest operational impact. 
+
+The objective is to help operations teams prioritize corrective action based on measurable business impact rather than isolated performance percentages.
+
+![Page 2: Trends and Operational Priorities](powerbi/Trends_and_Alerts.png)
 
 ---
 
@@ -348,7 +363,7 @@ supply-chain-delay-analysis/
 
 ## Business Intelligence Capabilities Demonstrated
 
-- Business problem definition and requirements analysis
+- Business problem definition and requirements structuring
 - Data ingestion and staging
 - Data quality profiling across 9 structured checks
 - Data cleaning and standardization with full documentation
@@ -357,7 +372,7 @@ supply-chain-delay-analysis/
 - Exception reporting with automated risk flagging
 - Power BI semantic modelling and DAX measure development
 - Google Sheets operational reporting layer design
-- Dashboard design for operational decision support
+- Executive dashboard design for operational decision support
 - Business insight generation and executive recommendations
 
 ---

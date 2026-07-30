@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+
+  <!-- Main background -->
+  <rect width="1280" height="720" fill="#1F3864"/>
+
+  <!-- Title bar area - empty, Power BI handles this -->
+  <rect x="0" y="0" width="1280" height="62" fill="#1F3864"/>
+
+  <!-- Thin divider -->
+  <rect x="0" y="62" width="1280" height="2" fill="#2E75B6"/>
+
+  <!-- KPI Section header bar - empty, Power BI handles this -->
+  <rect x="10" y="68" width="1260" height="28" rx="6" fill="#2E75B6"/>
+
+  <!-- KPI card slots with labels only -->
+  <rect x="20" y="100" width="295" height="65" rx="5" fill="#1A3357"/>
+  <text x="167" y="118" font-family="Arial" font-size="11" fill="#D6E4F0" text-anchor="middle">Total Orders Analysed</text>
+
+  <rect x="325" y="100" width="295" height="65" rx="5" fill="#1A3357"/>
+  <text x="472" y="118" font-family="Arial" font-size="11" fill="#D6E4F0" text-anchor="middle">Total Late Orders</text>
+
+  <rect x="630" y="100" width="295" height="65" rx="5" fill="#1A3357"/>
+  <text x="777" y="118" font-family="Arial" font-size="11" fill="#D6E4F0" text-anchor="middle">Late Rate</text>
+
+  <rect x="935" y="100" width="335" height="65" rx="5" fill="#1A3357"/>
+  <text x="1102" y="118" font-family="Arial" font-size="11" fill="#D6E4F0" text-anchor="middle">Avg Delay Days</text>
+
+  <!-- Delay Analysis section header - empty, Power BI handles this -->
+  <rect x="10" y="172" width="1260" height="28" rx="6" fill="#2E75B6"/>
+
+  <!-- Chart slot 1 with label -->
+  <rect x="10" y="204" width="410" height="228" rx="6" fill="#162C4E"/>
+  <text x="215" y="222" font-family="Arial" font-size="11" font-weight="bold" fill="white" text-anchor="middle">Late Rate by Shipping Mode</text>
+  <rect x="20" y="228" width="390" height="195" rx="4" fill="#1A3357"/>
+
+  <!-- Chart slot 2 with label -->
+  <rect x="430" y="204" width="410" height="228" rx="6" fill="#162C4E"/>
+  <text x="635" y="222" font-family="Arial" font-size="11" font-weight="bold" fill="white" text-anchor="middle">Late Rate by Product Category (Top 5)</text>
+  <rect x="440" y="228" width="390" height="195" rx="4" fill="#1A3357"/>
+
+  <!-- Chart slot 3 with label -->
+  <rect x="850" y="204" width="420" height="228" rx="6" fill="#162C4E"/>
+  <text x="1060" y="222" font-family="Arial" font-size="11" font-weight="bold" fill="white" text-anchor="middle">Late Rate by Region (Map)</text>
+  <rect x="860" y="228" width="400" height="195" rx="4" fill="#1A3357"/>
+
+  <!-- Performance Trends section header - empty, Power BI handles this -->
+  <rect x="10" y="438" width="1260" height="28" rx="6" fill="#2E75B6"/>
+
+  <!-- Bottom slot 1 with label -->
+  <rect x="10" y="470" width="410" height="238" rx="6" fill="#162C4E"/>
+  <text x="215" y="488" font-family="Arial" font-size="11" font-weight="bold" fill="white" text-anchor="middle">Monthly Late Rate Trend</text>
+  <rect x="20" y="494" width="390" height="205" rx="4" fill="#1A3357"/>
+
+  <!-- Bottom slot 2 with label -->
+  <rect x="430" y="470" width="410" height="238" rx="6" fill="#162C4E"/>
+  <text x="635" y="488" font-family="Arial" font-size="11" font-weight="bold" fill="white" text-anchor="middle">Top Repeat Offender Routes</text>
+  <rect x="440" y="494" width="390" height="205" rx="4" fill="#1A3357"/>
+
+  <!-- Bottom slot 3 with label -->
+  <rect x="850" y="470" width="420" height="238" rx="6" fill="#162C4E"/>
+  <text x="1060" y="488" font-family="Arial" font-size="11" font-weight="bold" fill="white" text-anchor="middle">Delivery Status Breakdown</text>
+  <rect x="860" y="494" width="400" height="205" rx="4" fill="#1A3357"/>
+
+</svg>
