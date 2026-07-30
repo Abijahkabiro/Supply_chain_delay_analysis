@@ -1,6 +1,7 @@
 # Supply Chain Delay Analysis
 
-Designed and delivered an end-to-end Business Intelligence solution that transformed 180,519 supply chain orders into executive insights on delivery performance, operational risk, and carrier accountability. Built this analytical solution to bridge that gap by transforming raw transaction data into actionable business intelligence.
+Designed and delivered an end-to-end Business Intelligence solution that transformed 180,519 supply chain orders into executive insights on delivery performance, operational risk, and carrier accountability. 
+
 Focused on enabling better operational decisions rather than simply reporting late deliveries. Used data profiling, analytical modelling, and exception reporting to provide decision-makers with the visibility needed to prioritize corrective action based on evidence instead of assumptions.
 
 **Author:** Abijah Kabiro | Business Intelligence Analyst | Nairobi, Kenya
@@ -13,7 +14,7 @@ Focused on enabling better operational decisions rather than simply reporting la
 
 ## Business Context
 
-The project examines how supply chain performance patterns can reveal early indicators of operational risk. A global e-commerce supply chain was experiencing persistent delivery delays across multiple regions and shipping modes. Although operations teams could see that deliveries were arriving late, they lacked the analytical visibility to understand where the problem was concentrated, which shipping modes were responsible, and what actions would have the highest business impact.
+This analytical solution examines how supply chain performance patterns. A global e-commerce supply chain was experiencing persistent delivery delays across multiple regions and shipping modes. Although operations teams could see that deliveries were arriving late, they lacked the analytical visibility to understand where the problem was concentrated, which shipping modes were responsible, and what actions would have the highest business impact.
 
 Without this visibility, delay management remained reactive. Operations teams were firefighting individual complaints rather than addressing the structural causes driving a network-wide performance failure.
 
