@@ -248,7 +248,7 @@ A three-tier colour system (red for critical, amber for elevated, green for acce
 
 Its primary purpose is to help decision-makers understand the scale of the delay problem, identify where risk is concentrated, and determine which areas require deeper investigation.
 
-![Page 1: Performance Overview](powerbi/Performance_Overview.png)
+![Page 1: Performance Overview](Power%20BI/Performance_Overview.png)
 
 ---
 
@@ -266,7 +266,7 @@ One of the most important findings was the difference between rate and volume. F
 
 The objective is to help operations teams prioritize corrective action based on measurable business impact rather than isolated performance percentages.
 
-![Page 2: Trends and Operational Priorities](powerbi/Trends_and_Alerts.png)
+![Page 2: Trends and Operational Priorities](Power%20BI/Trends_and_Alerts.png)
 
 ---
 
